@@ -12,6 +12,33 @@ const config = {
     measurementId: "G-CYSFJMFHZY"
 };
 
+export const bikinDocProfilUser = async (authnyaUser, dataTambahan) => {
+    if(!authnyaUser) return;
+
+    const referensiUser = firestore.doc(`users/${authnyaUser.uid}`);
+    const snapShot = await referensiUser.get();
+
+    if (!snapShot.exists) {
+
+        const { displayName, email } = authnyaUser;
+        const kapanDibuat = new Date();
+
+        try {
+            await referensiUser.set({
+                displayName,
+                email,
+                kapanDibuat,
+                ...dataTambahan
+            })
+        } catch (erornyaApa) {
+            console.log('Error bro! Gagal buat user baru!', erornyaApa.message);
+        };
+
+    }
+
+    return referensiUser;
+};
+
 firebase.initializeApp(config);
 
 export const auth = firebase.auth();
