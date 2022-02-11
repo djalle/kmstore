@@ -49,7 +49,7 @@ class SignIn extends React.Component {
         return(
             <div className="sign-in">
 
-                <h2>I think I have already singed up</h2>
+                <h2>I think I have already signed up</h2>
                 <span>Sign in with your email and password</span>
 
                 <form onSubmit={handleSubmit}>
@@ -79,6 +79,7 @@ class SignIn extends React.Component {
                         Sign In 
                         </CustomButton>  
                         <CustomButton 
+                            type="button"
                             onClick={signInWithGoogle} 
                             isGoogleSignIn
                         > 
