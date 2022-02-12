@@ -4,15 +4,15 @@ const INITIAL_STATE = {
     userAktif: null
 }
 
-const userReducer = (state = INITIAL_STATE, action) => {
-    switch (action.type) {
+const userReducer = (stateSebelumnya = INITIAL_STATE, aksi) => {
+    switch (aksi.type) {
         case UserActionTypes.SET_CURRRENT_USER:
             return {
-                ...state,
-                userAktif: action.payload
+                ...stateSebelumnya,
+                userAktif: aksi.payload
             }
         default:
-            return state
+            return stateSebelumnya
     }
 };
 
