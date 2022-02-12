@@ -1,7 +1,9 @@
 import CartActionTypes from './cart.types';
+import { tambahBarangKeKeranjang } from './cart.utils';
 
 const INTIAL_STATE = {
-    hidden: true
+    hidden: true,
+    barangBelanjaan: []
 };
 
 const cartReducer = (state = INTIAL_STATE, action) => {
@@ -11,6 +13,11 @@ const cartReducer = (state = INTIAL_STATE, action) => {
                 ...state,
                 hidden: !state.hidden
             };
+        case CartActionTypes.TAMBAH_BARANG:
+            return {
+                ...state,
+                barangBelanjaan: tambahBarangKeKeranjang(state.barangBelanjaan, action.payload)
+            }
         default:
             return state;
     }

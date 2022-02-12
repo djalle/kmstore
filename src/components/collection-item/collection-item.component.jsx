@@ -1,7 +1,15 @@
 import React from "react";
+import { connect } from "react-redux";
+import CustomButton from "../custom-button/custom-button.component";
+import { tambahBarang } from "../../redux/cart/cart.actions";
 import './collection-item.stayles.scss';
 
-const CollectionItem = ( {id, name, price, imageUrl} ) => (
+const CollectionItem = ( {item, masukinBarang} ) => {
+    
+    const { name, price, imageUrl} = item;
+
+
+    return (
     <div className="collection-item">
         <div 
             className="image"
@@ -13,8 +21,13 @@ const CollectionItem = ( {id, name, price, imageUrl} ) => (
             <span className="name">{name}</span>
             <span className="price">{price}</span>
         </div>
+        <CustomButton onClick={() => masukinBarang(item)} inverted> SIKATT! </CustomButton>
         
     </div>
-);
+)};
 
-export default CollectionItem
+const mapDispatchToProps = dispatch => ({
+    masukinBarang: barang => dispatch(tambahBarang(barang))
+});
+
+export default connect(null, mapDispatchToProps)(CollectionItem)
