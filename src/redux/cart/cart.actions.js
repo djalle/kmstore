@@ -9,3 +9,13 @@ export const tambahBarang = barang => ({
     payload: barang
 });
 
+export const kurangiBarang = barang => ({
+    type: CartActionTypes.KURANGI_SINGKIRKAN_BARANG, 
+    payload: barang
+});
+
+export const hapusBarang = barang => ({
+    type: CartActionTypes.HAPUS_BARANG,
+    payload: barang
+});
+

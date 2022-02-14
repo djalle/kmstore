@@ -14,5 +14,23 @@ export const tambahBarangKeKeranjang = (barangYgUdahAda, barangYangDitambah) => 
         
     return [...barangYgUdahAda, {...barangYangDitambah, qty: 1}]
     
-    
 };
+
+export const kurangiBarangDariKeranjang = (barangYgUdahAda, barangYangDikurang) => {
+    const barangExisting = barangYgUdahAda.find(
+        belanjaan => belanjaan.id === barangYangDikurang.id
+    )
+
+    if (barangExisting.qty === 1) {
+        return barangYgUdahAda.filter(barang => barang.id !== barangYangDikurang )
+    }
+
+    return barangYgUdahAda.map(
+        barang =>
+        barang.id === barangYangDikurang.id ?
+        { 
+            ...barang,
+            qty: barangYangDikurang.qty - 1 
+        } : barang
+    );
+}
