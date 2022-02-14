@@ -1,10 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
 import { ReactComponent as Logo } from '../../assets/crown.svg';
 import { auth } from '../../firebase/firebase.utils';
 import CartIcon from "../cart-icon/cart-icon.component";
 import CartDropdown from "../cart/cart.dropdown.component";
+import { selectCurrentUser } from "../../redux/user/user.selectors";
+import { selectHiddenDropCart } from "../../redux/cart/cart.selectors";
 import './header.styles.scss';
 
 const Header = ( {sudahLogin, hidden} ) => (
@@ -38,12 +41,19 @@ const Header = ( {sudahLogin, hidden} ) => (
     </div>
 );
 
-const mapStateToProps = ({
-    user: {userAktif},
-    cart: {hidden}
-}) => ({
-    sudahLogin: userAktif,
-    hidden
+// const mapStateToProps = ({
+//     user: {userAktif},
+//     cart: {hidden}
+// }) => ({
+//     sudahLogin: userAktif,
+//     hidden
+// });
+
+// Kalau pake selector dan createStructuredSelector jadi kayak begini:
+
+const mapStateToProps = createStructuredSelector({
+    sudahLogin: selectCurrentUser,
+    hidden: selectHiddenDropCart
 });
 
 export default connect(mapStateToProps)(Header);
