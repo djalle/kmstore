@@ -16,7 +16,7 @@ export const pilihKoleksiJualan = createSelector (
 );
 
 export const pilihKoleksiBuatPreview = createSelector(
-    [selectCollection],
+    [pilihKoleksiJualan],
     daftarKoleksi => Object.keys(daftarKoleksi).map(keyObjek => daftarKoleksi[keyObjek] )
 );
 
