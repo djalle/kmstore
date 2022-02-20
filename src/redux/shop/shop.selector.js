@@ -15,9 +15,16 @@ export const pilihKoleksiJualan = createSelector (
     belanja => belanja.koleksiJualan
 );
 
+// export const pilihKoleksiBuatPreview = createSelector(
+//     [pilihKoleksiJualan],
+//     daftarKoleksi => Object.keys(daftarKoleksi).map(keyObjek => daftarKoleksi[keyObjek] )
+// );
+
 export const pilihKoleksiBuatPreview = createSelector(
     [pilihKoleksiJualan],
-    daftarKoleksi => Object.keys(daftarKoleksi).map(keyObjek => daftarKoleksi[keyObjek] )
+    daftarKoleksi => daftarKoleksi ? 
+        Object.keys(daftarKoleksi).map(keyObjek => daftarKoleksi[keyObjek] )
+        : []
 );
 
 export const selectCollection = urlParameter => createSelector(
@@ -25,5 +32,6 @@ export const selectCollection = urlParameter => createSelector(
     // koleksi => koleksi.find(
     //     koleksiBarang => koleksiBarang.id === ID_KOLEKSI[urlParameter]
     // )
-    koleksi => koleksi[urlParameter]
+    koleksi => (koleksi ? koleksi[urlParameter] : null)
+
 );

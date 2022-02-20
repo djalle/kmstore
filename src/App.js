@@ -8,9 +8,14 @@ import ShopPage from './pages/shop/shop.component.jsx';
 import SignInSignUpPage from './pages/sign-in-sign-up/sign-in-sign-up.component';
 import Header from './components/header/header.component';
 import CheckoutPage from './pages/check-out/checkout.component';
-import { auth, bikinDocProfilUser } from './firebase/firebase.utils';
+import { 
+  auth, 
+  bikinDocProfilUser, 
+  // tambahKoleksiDanDokumen 
+} from './firebase/firebase.utils';
 import { setCurrentUser } from './redux/user/user.action' ;
-import { selectCurrentUser } from './redux/user/user.selectors'
+import { selectCurrentUser } from './redux/user/user.selectors';
+// import { pilihKoleksiBuatPreview } from './redux/shop/shop.selector';
 
 class App extends React.Component {
 
@@ -27,7 +32,10 @@ class App extends React.Component {
 
   componentDidMount() {
 
-    const {setCurrentUser} = this.props;
+    const {
+            setCurrentUser, 
+            // arrayKoleksi
+          } = this.props;
 
     this.keluarDariAuth = auth.onAuthStateChanged( async userAuth => {
       if (userAuth) {
@@ -51,7 +59,8 @@ class App extends React.Component {
 
       } else {
 
-        setCurrentUser( userAuth )
+        setCurrentUser( userAuth );
+        // tambahKoleksiDanDokumen('collections', arrayKoleksi.map(({title, items}) => ({title, items}) ));
 
       };
 
@@ -89,7 +98,8 @@ class App extends React.Component {
 };
 
 const mapStateToProps = createStructuredSelector({
-  userAktif: selectCurrentUser
+  userAktif: selectCurrentUser,
+  // arrayKoleksi: pilihKoleksiBuatPreview
 });
 
 const mapDispatchToProps = dispatch => ({

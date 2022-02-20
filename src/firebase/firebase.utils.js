@@ -39,6 +39,69 @@ export const bikinDocProfilUser = async (authnyaUser, dataTambahan) => {
     return referensiUser;
 };
 
+// export const bikinInvetoriKoleksi = async ( barangKoleksiToko, dataBarang ) => {
+//     if(!barangKoleksiToko) return;
+
+//     const referensiKoleksi = firestore.doc(`collection/${barangKoleksiToko.uid}`);
+//     const snapShot = await referensiKoleksi.get();
+
+//     if (!snapShot.exists) {
+
+//         const { id, name, imageUrl, price } = barangKoleksiToko;
+//         const kapanDimasukin = new Date();
+
+//         try {
+//             await referensiKoleksi.set({
+//                 id,
+//                 name,
+//                 imageUrl,
+//                 price,
+//                 kapanDimasukin,
+//                 ...dataBarang
+//             })
+//         } catch (erornyaApa) {
+//             console.log('Error bro! Gagal buat user baru!', erornyaApa.message);
+//         };
+
+//     }
+
+//     return referensiKoleksi;
+// };
+
+export const tambahKoleksiDanDokumen = async ( keyKoleksi, objekYangDitambah ) => {
+    
+    const referensiKoleksi = firestore.collection(keyKoleksi);
+    
+    const batch = firestore.batch();
+    objekYangDitambah.forEach(objek => {
+        const dokumenReferensiBaru = referensiKoleksi.doc();
+        batch.set(dokumenReferensiBaru, objek)
+    });
+
+    return await batch.commit()
+    
+};
+
+export const convertSnapshopKoleksiKeMap = collectionsSnapshot => {
+    
+    const rubahFileKoleksi = collectionsSnapshot.docs.map( docSnapshot => {
+        const { title, items } =  docSnapshot.data();
+
+        return {
+            routeName: encodeURI(title.toLowerCase()),
+            id: docSnapshot.id,
+            title,
+            items
+        }
+    });
+
+    return rubahFileKoleksi.reduce((accumulator, collection) => {
+        accumulator[collection.title.toLowerCase()] = collection;
+        return accumulator;
+    },{});
+
+}
+
 firebase.initializeApp(config);
 
 export const auth = firebase.auth();
